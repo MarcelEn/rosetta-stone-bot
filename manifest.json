@@ -1,0 +1,19 @@
+{
+    "name": "Rosetta Bot",
+    "version": "1.0",
+    "description": "",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://pro1.tellmemorepro.com/*"
+            ],
+            "js": [
+                "contentScript.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage"
+    ],
+    "manifest_version": 2
+}
