@@ -24,10 +24,12 @@
 
     function createSelectInterval() {
         setTimeout(function () {
-            if (running){
+            if (running) {
                 var date = new Date();
                 console.log(`new Selection @${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-                selection[Math.floor(Math.random()*selection.length)].click();
+                if (selection.length > 0) {
+                    selection[Math.floor(Math.random() * selection.length)].click();
+                }
                 createSelectInterval();
             }
         }, 1000)
@@ -35,7 +37,7 @@
 
     function createRefreshTimeout() {
         setTimeout(function () {
-            if(running){
+            if (running) {
                 location.reload();
             }
         }, 60000)
@@ -46,8 +48,8 @@
     button.innerHTML = running ? 'stop' : 'start';
     button.onclick = handleClick;
 
-    if(running){
-       startCheatProcess();
+    if (running) {
+        startCheatProcess();
     }
 
 
