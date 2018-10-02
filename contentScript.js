@@ -1,19 +1,57 @@
 (function () {
+    var initCheck = function () {
+        var selection = getSelection();
+        for (var i = 0; i < selection.length; i++) {
+            if (selection[i].innerHTML.search("money") != -1) {
+                selection[i].click();
+                submit();
+                setTimeout(next, 100)
+                return;
+            }
+        }
+    }
+
+
     var LOCAL_STORAGE_NAME = "running";
     var button = document.createElement("button");
     var running = localStorage.getItem(LOCAL_STORAGE_NAME) ? true : false;
-    var selection = document.querySelectorAll(".wordListArea input");
+    var submit = document.getElementById("btnCorrect");
+
+    var submit = function () {
+        document.getElementById("btnCorrect").click();
+    }
+
+    var next = function () {
+        document.getElementById("btnNext").click();
+    }
+
+    function getSelection() {
+        return document.querySelectorAll(".wordListArea label");
+    }
+
+
+    function selectBills() {
+        var selection = getSelection();
+        for (var i = 0; i < selection.length; i++) {
+            if (selection[i].innerHTML.search("bills") != -1) {
+                selection[i].click();
+                return;
+            }
+        }
+    }
 
     function handleClick() {
         if (running) {
+            running = false;
             localStorage.removeItem(LOCAL_STORAGE_NAME);
             button.innerHTML = 'start';
-            running = false;
+            selectBills();
+            submit();
+            setTimeout(next, 100)
+
         } else {
             localStorage.setItem(LOCAL_STORAGE_NAME, " ");
-            button.innerHTML = 'stop';
-            startCheatProcess();
-            running = true;
+            window.location.replace('https://pro1.tellmemorepro.com/TellMeMore/SystemManagement/FreeMode/FreeMode.aspx?WorkShopType=WorkshopVocabulary&fac=true&FamilyId=cd472763-22b6-44bf-836c-b47eb35243dc&SubfamilyId=f2c05245-e069-439c-a8ec-48b6f9744c02&ActivityTypeGroupName=8&ActivityType=17&CategoryId=dbac4088-ab99-41d2-84d4-445d8c180f0c');
         }
     }
 
@@ -23,10 +61,9 @@
     }
 
     function createSelectInterval() {
+        var selection = getSelection();
         setTimeout(function () {
             if (running) {
-                var date = new Date();
-                console.log(`new Selection @${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
                 if (selection.length > 0) {
                     selection[Math.floor(Math.random() * selection.length)].click();
                 }
@@ -43,6 +80,7 @@
         }, 60000)
     }
 
+    initCheck();
 
     button.style = "position: absolute; bottom: 10px; left: 10px; padding: 10px; cursor: pointer; z-index: 999";
     button.innerHTML = running ? 'stop' : 'start';
